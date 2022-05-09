@@ -1,14 +1,14 @@
 import React from "react";
+import ContentWrapper from "./components/ContentWrapper";
+import HeroSection from "./components/HeroSection";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   return (
-    <div>
-      <header>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
-    </div>
+    <ContentWrapper>
+      <HeroSection />
+      <SearchBar />
+    </ContentWrapper>
   );
 }
 
