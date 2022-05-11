@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
 type Props = {
-  onSearch: (searchText: string, selectedLang: string) => void;
+  onSearch: (searchText: string, searchLang: string) => void;
 };
 
 const SearchBar = ({ onSearch }: Props) => {
   const [searchText, setSearchText] = useState("");
-  const [selectedLang, setSelectedLang] = useState("pl");
+  const [searchLang, setsearchLang] = useState("pl");
 
   const handleSearchTextChange = (event: React.FormEvent<HTMLInputElement>) => {
     setSearchText(event.currentTarget.value);
   };
 
   const handleLangChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setSelectedLang(event.currentTarget.value);
+    setsearchLang(event.currentTarget.value);
   };
 
   const handleSearchClick = () => {
-    onSearch(searchText, selectedLang);
+    onSearch(searchText, searchLang);
   };
 
   return (

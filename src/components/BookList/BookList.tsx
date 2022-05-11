@@ -1,6 +1,11 @@
+import { TBook } from "../models/Book";
 import Book from "./Book";
 
-const BookList = () => {
+type Props = {
+  foundBooks: TBook[] | undefined;
+};
+
+const BookList = ({ foundBooks }: Props) => {
   return (
     <section
       style={{
@@ -8,15 +13,13 @@ const BookList = () => {
         display: "grid",
         gap: "1rem",
         overflow: "auto",
-        gridTemplateColumns: "repeat(5, 1fr)",
-        gridAutoRows: "minmax(100px,auto)",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gridAutoRows: "minmax(300px,auto)",
       }}
     >
-      <Book />
-      <Book />
-      <Book />
-      <Book />
-      <Book />
+      {foundBooks?.map((book) => (
+        <Book key={book.id} book={book} />
+      ))}
     </section>
   );
 };
