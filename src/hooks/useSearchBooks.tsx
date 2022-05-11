@@ -1,6 +1,7 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { TBook } from "../models/Book";
+import axios from "axios";
+
+import { TBook } from "models/Book";
 
 type SearchParameters = {
   searchText: string;
@@ -20,7 +21,7 @@ const useSearchBooks = () => {
     if (index + 15 < maxIndex) {
       setIndex((prev) => prev + 15);
     }
-  }, [index]);
+  }, [index, maxIndex]);
 
   const changeSearchParameters = (newSearchParameters: SearchParameters) => {
     setIndex(0);

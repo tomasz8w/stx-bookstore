@@ -1,12 +1,18 @@
-import { TBook } from "../../models/Book";
+import { TBook } from "models/Book";
+import useBookStore from "stores/bookStore";
 
 type Props = {
   book: TBook;
 };
 const Book = ({ book }: Props) => {
+  const { addBook, deleteBook, isBookInStore } = useBookStore();
+
+  const bookInStore = isBookInStore(book.id);
+
   return (
     <article
       style={{
+        backgroundColor: bookInStore ? "#F2E3BC" : "unset",
         display: "flex",
         flexDirection: "column",
         flex: 1,
@@ -57,7 +63,18 @@ const Book = ({ book }: Props) => {
           Published date: {book.publishedDate.split("-")?.at(0)}
         </p>
       )}
-      <button>Add to library</button>
+      {bookInStore ? (
+        <button
+          style={{ marginTop: "auto" }}
+          onClick={() => deleteBook(book.id)}
+        >
+          Remove from library
+        </button>
+      ) : (
+        <button style={{ marginTop: "auto" }} onClick={() => addBook(book)}>
+          Add to library
+        </button>
+      )}
     </article>
   );
 };

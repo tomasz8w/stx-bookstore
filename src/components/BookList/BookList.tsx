@@ -1,5 +1,6 @@
-import useEndOfScroll from "../../hooks/useEndOfScroll";
-import { TBook } from "../../models/Book";
+import { TBook } from "models/Book";
+import useEndOfScroll from "hooks/useEndOfScroll";
+
 import Book from "./Book";
 
 type Props = {
