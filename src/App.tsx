@@ -6,7 +6,7 @@ import SearchBar from "./components/SearchBar";
 import useSearchBooks from "./hooks/useSearchBooks";
 
 function App() {
-  const { setSearchParameters, foundBooks } = useSearchBooks();
+  const { setSearchParameters, foundBooks, fetchMoreBooks } = useSearchBooks();
   const onSearch = (searchText: string, searchLang: string) => {
     setSearchParameters({ searchText, searchLang });
   };
@@ -15,7 +15,7 @@ function App() {
     <ContentWrapper>
       <HeroSection />
       <SearchBar onSearch={onSearch} />
-      <BookList foundBooks={foundBooks} />
+      <BookList foundBooks={foundBooks} onScrollEnd={fetchMoreBooks} />
     </ContentWrapper>
   );
 }

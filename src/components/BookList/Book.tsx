@@ -1,4 +1,4 @@
-import { TBook } from "../models/Book";
+import { TBook } from "../../models/Book";
 
 type Props = {
   book: TBook;
@@ -42,9 +42,11 @@ const Book = ({ book }: Props) => {
             </div>
           )}
         </div>
-        <p style={{ fontSize: "0.8rem" }}>
-          Published date: {book.publishedDate}
-        </p>
+        {book.publishedDate && (
+          <p style={{ fontSize: "0.8rem" }}>
+            Published date: {book.publishedDate.split("-")?.at(0)}
+          </p>
+        )}
       </article>
     </div>
   );
