@@ -15,18 +15,24 @@ const Book = ({ book }: Props) => {
           boxShadow: "1px 1px 3px rgb(0,0,0,0.16)",
         }}
       >
-        <div style={{ display: "flex", flex: "1" }}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flex: "1", gap: "0.5rem" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <p style={{ fontWeight: 500 }}>{book.title}</p>
-            <p>{book.description?.slice(0, 200).concat(" (...)")}</p>
+            <p>{book.description?.slice(0, 200).concat("...")}</p>
           </div>
           {book.imageLink && (
             <div
               style={{
                 display: "flex",
+                flex: "0 1 auto",
                 justifyContent: "center",
                 height: "100%",
-                width: "100%",
+                marginLeft: "auto",
               }}
             >
               <img

@@ -1,4 +1,3 @@
-import React from "react";
 import BookList from "./components/BookList";
 import ContentWrapper from "./components/ContentWrapper";
 import HeroSection from "./components/HeroSection";

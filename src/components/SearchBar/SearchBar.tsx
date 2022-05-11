@@ -16,12 +16,14 @@ const SearchBar = ({ onSearch }: Props) => {
     setsearchLang(event.currentTarget.value);
   };
 
-  const handleSearchClick = () => {
+  const handleSearchClick = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onSearch(searchText, searchLang);
   };
 
   return (
-    <section
+    <form
+      onSubmit={handleSearchClick}
       style={{
         display: "flex",
         flexDirection: "row",
@@ -31,6 +33,7 @@ const SearchBar = ({ onSearch }: Props) => {
         borderRadius: "5px",
         alignItems: "center",
         padding: "0.5rem",
+        marginBottom: "1rem",
       }}
     >
       <input
@@ -57,8 +60,7 @@ const SearchBar = ({ onSearch }: Props) => {
       <label htmlFor="en">EN</label>
 
       <button
-        type="button"
-        onClick={handleSearchClick}
+        type="submit"
         style={{
           border: "1px solid gray",
           backgroundColor: "#fff",
@@ -68,7 +70,7 @@ const SearchBar = ({ onSearch }: Props) => {
       >
         Search
       </button>
-    </section>
+    </form>
   );
 };
 export default SearchBar;
