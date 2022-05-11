@@ -20,7 +20,7 @@ const BookList = ({ foundBooks, onScrollEnd }: Props) => {
         gap: "1rem",
         overflow: "auto",
         gridTemplateColumns: "repeat(2, 1fr)",
-        gridAutoRows: "minmax(250px,auto)",
+        gridAutoRows: "minmax(280px,auto)",
       }}
     >
       {foundBooks?.map((book) => (

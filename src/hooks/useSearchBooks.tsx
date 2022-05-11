@@ -11,6 +11,7 @@ const useSearchBooks = () => {
   const [searchParameters, setSearchParameters] = useState<
     SearchParameters | undefined
   >();
+  const [loading, setLoading] = useState(false);
   const [index, setIndex] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const [foundBooks, setFoundBooks] = useState<TBook[] | undefined>();
@@ -28,12 +29,16 @@ const useSearchBooks = () => {
 
   useEffect(() => {
     if (!searchParameters) return;
+    setLoading(true);
+
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchParameters.searchText}&langRestrict=${searchParameters.searchLang}&startIndex=${index}&maxResults=15&printType=books`
       )
       .then(({ data }) => {
+        setLoading(false);
         setMaxIndex(data.totalItems);
+        console.log(data.totalItems);
         const books =
           data.totalItems > 0
             ? data.items.map((item: any) => ({
@@ -58,7 +63,7 @@ const useSearchBooks = () => {
       });
   }, [searchParameters, index]);
 
-  return { changeSearchParameters, foundBooks, fetchMoreBooks };
+  return { changeSearchParameters, foundBooks, fetchMoreBooks, loading };
 };
 
 export default useSearchBooks;

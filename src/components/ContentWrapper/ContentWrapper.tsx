@@ -8,6 +8,7 @@ const ContentWrapper = ({ children }: Props) => (
       display: "flex",
       flexDirection: "column",
       width: "100vw",
+      minWidth: "950px",
       height: "100vh",
       alignItems: "center",
     }}
