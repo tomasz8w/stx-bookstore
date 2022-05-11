@@ -5,9 +5,10 @@ import SearchBar from "./components/SearchBar";
 import useSearchBooks from "./hooks/useSearchBooks";
 
 function App() {
-  const { setSearchParameters, foundBooks, fetchMoreBooks } = useSearchBooks();
+  const { changeSearchParameters, foundBooks, fetchMoreBooks } =
+    useSearchBooks();
   const onSearch = (searchText: string, searchLang: string) => {
-    setSearchParameters({ searchText, searchLang });
+    changeSearchParameters({ searchText, searchLang });
   };
 
   return (

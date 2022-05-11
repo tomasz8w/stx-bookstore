@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TBook } from "../models/Book";
 
 type SearchParameters = {
@@ -15,15 +15,16 @@ const useSearchBooks = () => {
   const [maxIndex, setMaxIndex] = useState(0);
   const [foundBooks, setFoundBooks] = useState<TBook[] | undefined>();
 
-  const fetchMoreBooks = () => {
+  const fetchMoreBooks = useCallback(() => {
     if (index + 15 < maxIndex) {
       setIndex((prev) => prev + 15);
     }
-  };
+  }, [index]);
 
-  useEffect(() => {
+  const changeSearchParameters = (newSearchParameters: SearchParameters) => {
     setIndex(0);
-  }, [searchParameters]);
+    setSearchParameters(newSearchParameters);
+  };
 
   useEffect(() => {
     if (!searchParameters) return;
@@ -31,12 +32,11 @@ const useSearchBooks = () => {
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchParameters.searchText}&langRestrict=${searchParameters.searchLang}&startIndex=${index}&maxResults=15&printType=books`
       )
-      .then((res) => {
-        const response = res.data;
-        setMaxIndex(response.totalItems);
+      .then(({ data }) => {
+        setMaxIndex(data.totalItems);
         const books =
-          response.totalItems > 0
-            ? response.items.map((item: any) => ({
+          data.totalItems > 0
+            ? data.items.map((item: any) => ({
                 id: item.id,
                 title: item.volumeInfo.title,
                 description: item.volumeInfo.description,
@@ -58,7 +58,7 @@ const useSearchBooks = () => {
       });
   }, [searchParameters, index]);
 
-  return { setSearchParameters, foundBooks, fetchMoreBooks };
+  return { changeSearchParameters, foundBooks, fetchMoreBooks };
 };
 
 export default useSearchBooks;
