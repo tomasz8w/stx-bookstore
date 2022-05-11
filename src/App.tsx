@@ -5,7 +5,7 @@ import SearchBar from "./components/SearchBar";
 import useSearchBooks from "./hooks/useSearchBooks";
 
 function App() {
-  const { changeSearchParameters, foundBooks, fetchMoreBooks, loading } =
+  const { changeSearchParameters, foundBooks, fetchMoreBooks } =
     useSearchBooks();
   const onSearch = (searchText: string, searchLang: string) => {
     changeSearchParameters({ searchText, searchLang });
