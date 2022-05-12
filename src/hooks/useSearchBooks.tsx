@@ -36,36 +36,37 @@ const useSearchBooks = () => {
   useEffect(() => {
     if (!searchParameters) return;
     setLoading(true);
+    (async () => {
+      axios
+        .get(
+          `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchParameters.searchText}&langRestrict=${searchParameters.searchLang}&startIndex=${index}&maxResults=15&printType=books`
+        )
+        .then(({ data }) => {
+          setLoading(false);
+          setMaxIndex(data.totalItems);
+          const books =
+            data.totalItems > 0
+              ? data.items.map((item: any) => ({
+                  id: item.id,
+                  title: item.volumeInfo.title,
+                  description: item.volumeInfo.description,
+                  publishedDate: item.volumeInfo.publishedDate,
+                  imageLink: item.volumeInfo.imageLinks?.thumbnail,
+                }))
+              : undefined;
 
-    axios
-      .get(
-        `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchParameters.searchText}&langRestrict=${searchParameters.searchLang}&startIndex=${index}&maxResults=15&printType=books`
-      )
-      .then(({ data }) => {
-        setLoading(false);
-        setMaxIndex(data.totalItems);
-        const books =
-          data.totalItems > 0
-            ? data.items.map((item: any) => ({
-                id: item.id,
-                title: item.volumeInfo.title,
-                description: item.volumeInfo.description,
-                publishedDate: item.volumeInfo.publishedDate,
-                imageLink: item.volumeInfo.imageLinks?.thumbnail,
-              }))
-            : undefined;
-
-        setFoundBooks((foundBooksPrev) => {
-          if (index > 0 && foundBooksPrev) {
-            const newFoundBooks = [...foundBooksPrev, ...books];
-            // filter out duplicates when searching by most relevant:
-            return newFoundBooks.filter(
-              (v, i, arr) => arr.findIndex((t) => t.id === v.id) === i
-            );
-          }
-          return books;
+          setFoundBooks((foundBooksPrev) => {
+            if (index > 0 && foundBooksPrev) {
+              const newFoundBooks = [...foundBooksPrev, ...books];
+              // filter out duplicates when searching by most relevant:
+              return newFoundBooks.filter(
+                (v, i, arr) => arr.findIndex((t) => t.id === v.id) === i
+              );
+            }
+            return books;
+          });
         });
-      });
+    })();
   }, [searchParameters, index]);
 
   return {
