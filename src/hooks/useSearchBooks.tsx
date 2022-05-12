@@ -1,4 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -7,6 +6,21 @@ import { TBook } from "models/Book";
 type SearchParameters = {
   searchText: string;
   searchLang: string;
+};
+
+type ApiModel = {
+  totalItems: number;
+  items: {
+    id: string;
+    volumeInfo: {
+      title: string;
+      description?: string;
+      publishedDate?: string;
+      imageLinks?: {
+        thumbnail: string;
+      };
+    };
+  }[];
 };
 
 const useSearchBooks = () => {
@@ -38,15 +52,15 @@ const useSearchBooks = () => {
     setLoading(true);
     (async () => {
       axios
-        .get(
+        .get<ApiModel>(
           `https://www.googleapis.com/books/v1/volumes?q=intitle:${searchParameters.searchText}&langRestrict=${searchParameters.searchLang}&startIndex=${index}&maxResults=15&printType=books`
         )
         .then(({ data }) => {
           setLoading(false);
           setMaxIndex(data.totalItems);
-          const books =
+          const books: TBook[] | undefined =
             data.totalItems > 0
-              ? data.items.map((item: any) => ({
+              ? data.items.map((item) => ({
                   id: item.id,
                   title: item.volumeInfo.title,
                   description: item.volumeInfo.description,
@@ -57,6 +71,7 @@ const useSearchBooks = () => {
 
           setFoundBooks((foundBooksPrev) => {
             if (index > 0 && foundBooksPrev) {
+              if (!books) return foundBooksPrev;
               const newFoundBooks = [...foundBooksPrev, ...books];
               // filter out duplicates when searching by most relevant:
               return newFoundBooks.filter(

@@ -5,6 +5,7 @@ that will allow him to browse the list of books and help him understand what nee
 ordered for his bookstores.
 Use the publicly available Google API as a source of data:
 ​​https://developers.google.com/books/docs/v1/using#WorkingVolumes
+
 https://www.googleapis.com/books/v1/volumes?q=Hobbit
 
 # Requirements:
@@ -16,12 +17,11 @@ https://www.googleapis.com/books/v1/volumes?q=Hobbit
 - The user should be able to search for the book using the chosen language - Polish or
   English.
 - Each element on the displayed list of books should contain:
-- a picture of the book cover
-- the title of the book
-- the year of book’s publication
-- the book’s description (it should be shortened to 200 characters if needed,
-  “...” should be displayed at the end if it was shortened).
-
+  - a picture of the book cover
+  - the title of the book
+  - the year of book’s publication
+  - the book’s description (it should be shortened to 200 characters if needed,
+    “...” should be displayed at the end if it was shortened).
 - The number of results on the displayed list should be limited to 15. More records
   should load after the user scrolls to the end of the page (infinite scroll).
 - The user should be able to mark which books are already in their library. Each record
