@@ -6,9 +6,10 @@ import Book from "./Book";
 type Props = {
   foundBooks: TBook[] | undefined;
   onScrollEnd: () => void;
+  endOfResults: boolean;
 };
 
-const BookList = ({ foundBooks, onScrollEnd }: Props) => {
+const BookList = ({ foundBooks, onScrollEnd, endOfResults }: Props) => {
   const { onScroll, sectionRef } = useEndOfScroll(onScrollEnd);
 
   return (
@@ -27,6 +28,9 @@ const BookList = ({ foundBooks, onScrollEnd }: Props) => {
       {foundBooks?.map((book) => (
         <Book key={book.id} book={book} />
       ))}
+      {endOfResults && (
+        <p style={{ textAlign: "center", gridColumn: "1/3" }}>End of results</p>
+      )}
     </section>
   );
 };

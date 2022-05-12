@@ -18,10 +18,14 @@ const useSearchBooks = () => {
   const [maxIndex, setMaxIndex] = useState(0);
   const [foundBooks, setFoundBooks] = useState<TBook[] | undefined>();
 
+  const endOfResults =
+    !loading && (searchParameters || false) && index + 15 >= maxIndex;
+
   const fetchMoreBooks = useCallback(() => {
-    if (index + 15 < maxIndex) {
+    if (!endOfResults) {
       setIndex((prev) => prev + 15);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index, maxIndex]);
 
   const changeSearchParameters = (newSearchParameters: SearchParameters) => {
@@ -40,7 +44,6 @@ const useSearchBooks = () => {
       .then(({ data }) => {
         setLoading(false);
         setMaxIndex(data.totalItems);
-        console.log(data.totalItems);
         const books =
           data.totalItems > 0
             ? data.items.map((item: any) => ({
@@ -65,7 +68,13 @@ const useSearchBooks = () => {
       });
   }, [searchParameters, index]);
 
-  return { changeSearchParameters, foundBooks, fetchMoreBooks, loading };
+  return {
+    changeSearchParameters,
+    foundBooks,
+    fetchMoreBooks,
+    loading,
+    endOfResults,
+  };
 };
 
 export default useSearchBooks;

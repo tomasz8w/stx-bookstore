@@ -38,6 +38,7 @@ const SearchBar = ({ onSearch }: Props) => {
     >
       <input
         type="search"
+        placeholder="Book title"
         value={searchText}
         onChange={handleSearchTextChange}
       />
