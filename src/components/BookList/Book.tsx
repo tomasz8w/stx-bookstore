@@ -34,7 +34,10 @@ const Book = ({ book }: Props) => {
           }}
         >
           <p style={{ fontWeight: 500 }}>{book.title}</p>
-          <p>{book.description?.slice(0, 200).concat("...")}</p>
+          <p>
+            {book.description?.slice(0, 200)}
+            {book.description && book.description.length > 200 && "..."}
+          </p>
         </div>
         {book.imageLink && (
           <div
